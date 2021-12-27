@@ -1,16 +1,18 @@
 <template>
   <div class="favorite-products-block">
-    <div v-if="sliderMode" class="sliderButton" @click="prev">
+    <div v-if="sliderMode && currentSlide !==0" class="sliderButton" @click="prev">
       <img src="../assets/back_btn.svg" class="prevButton" alt="prev image button">
     </div>
+    <div v-else class="sliderPlug"></div>
     <div class="imagesBlock">
-      <Slick ref="slick" :options="slickOptions">
+      <slick ref="slick" :options="slickOptions">
         <ProductComponent v-for="slide in slides" :key="slide.id" :slide="slide"/>
-      </Slick>
+      </slick>
     </div>
-    <div v-if="sliderMode" class="sliderButton" @click="next">
+    <div v-if="sliderMode && currentSlide < allSlides - slickOptions.slidesToShow" class="sliderButton" @click="next">
       <img src="../assets/back_btn.svg" class="nextButton" alt="next image button">
     </div>
+    <div v-else class="sliderPlug"></div>
   </div>
 </template>
 
@@ -28,10 +30,13 @@ export default {
       sliderMode: true,
       slickOptions: {
         slidesToShow: 5,
-        slidesToScroll: 2,
-        infinite: true,
+        slidesToScroll: 1,
+        infinite: false,
         arrows: false,
+        accessibility: true,
       },
+      currentSlide: 0,
+      allSlides: 0,
       slides:[
       { id: "1", name: "A->Z" },
       { id: "2", name: "Z->A" },
@@ -43,13 +48,19 @@ export default {
       { id: "8", name: "highest->lowest" },
       ]
   }),
-  mounted() {},
+  mounted() {
+    // hardcode values
+    this.currentSlide = 0;
+    this.allSlides = 8
+  },
   methods: {
     next(){
       this.$refs.slick.next();
+      this.currentSlide +=1;
     },
     prev(){
       this.$refs.slick.prev();
+      this.currentSlide -=1;
     },
     reInit(){
       this.$nextTick(()=> {
@@ -71,6 +82,13 @@ export default {
 }
 .sliderButton{
   width: 25px;
+  height: 25px;
+}
+.sliderButton:hover{
+  cursor: pointer;
+}
+.sliderPlug{
+  min-width: 25px;
   height: 25px;
 }
 .nextButton{

@@ -2,7 +2,7 @@
   <label class="wrapper flex items-center">
     {{label}}
     <input class="checkbox" type="checkbox" :checked="isChecked" :value="value" @change="updateInput"/>
-    <span class="checkmark"></span>
+    <span :class="checkBoxType"></span>
   </label>
 </template>
 
@@ -15,16 +15,19 @@ export default {
   props: {
     "value": { type: String },
     "modelValue": { default: "" },
-    "label": { type: String, required: true},
     "trueValue": { default: true },
-    "falseValue": { default: false }
+    "falseValue": { default: false },
+    isFavorite: {
+      type: Boolean,
+      required: true,
+    },
+    checkBoxType: String,
   },
   computed: {
     isChecked() {
       if (this.modelValue instanceof Array) {
         return this.modelValue.includes(this.value)
       }
-      // Note that `true-value` and `false-value` are camelCase in the JS
       return this.modelValue === this.trueValue
     }
   },
@@ -47,68 +50,56 @@ export default {
 }
 </script>
 
-<style lang="postcss" scoped>
-/* Customize the label (the wrapper) */
+<style>
 .wrapper {
-  display: block;
+  display: flex;
+  align-items: center;
+  user-select: none;
   position: relative;
-  padding-left: 35px;
-  margin-bottom: 6px;
   cursor: pointer;
-  font-size: 22px;
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
-  font-size: 16px;
 }
-/* Hide the browser's default checkbox */
 .wrapper input {
   position: absolute;
   opacity: 0;
-  cursor: pointer;
   height: 0;
   width: 0;
 }
-/* Create a custom checkbox */
-.checkmark {
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 21px;
-  width: 21px;
+.checkmark, .starmark {
+  box-sizing: border-box;
+  background-origin: border-box;
+  display: inline-block;
+  width: 22px;
+  height: 22px;
+  flex-shrink: 0;
+  flex-grow: 0;
+  border: 1px solid #807873;
   border-radius: 2px;
-  background-color: #eee;
-  border: 1px solid #ccc;
+  background-repeat: no-repeat;
+  background-position: center center;
 }
-/* On mouse-over, add a grey background color */
+.starmark{
+  width: 25px;
+  height: 25px;
+  border: 1px solid #807873;
+  background-image: url(../assets/favorite_icon_unselected.svg);
+}
 .wrapper:hover input ~ .checkmark {
-  background-color: #ccc;
+  background-image: url(../assets/checkbox.svg);
+  opacity: 0.5;
 }
-/* When the checkbox is checked, add a blue background */
 .wrapper input:checked ~ .checkmark {
-  background-color: #1CD4A7;
+  background-image: url(../assets/checkbox.svg);
+  opacity: 1;
 }
-/* Create the checkmark/indicator (hidden when not checked) */
-.checkmark:after {
-  content: "";
-  position: absolute;
-  display: none;
+.wrapper:hover input ~ .starmark {
+  background-image: url(../assets/favorite_icon_hovered.svg);
 }
-/* Show the checkmark when checked */
-.wrapper input:checked ~ .checkmark:after {
-  display: block;
-}
-/* Style the checkmark/indicator */
-.wrapper .checkmark:after {
-  left: 7px;
-  top: 0px;
-  width: 7px;
-  height: 15px;
-  border: solid white;
-  border-width: 0 3px 3px 0;
-  -webkit-transform: rotate(45deg);
-  -ms-transform: rotate(45deg);
-  transform: rotate(45deg);
+.wrapper input:checked ~ .starmark {
+  background-image: url(../assets/favorite_icon.svg);
+  opacity: 1;
 }
 </style>

@@ -3,20 +3,10 @@
     <div class="product-inner-block">
       <div class="product-icons-block">
         <div class="product-checkToCart-block">
-          <label class="wrapper flex items-center">
-            {{ label }}
-            <input
-              class="checkbox"
-              type="checkbox"
-              :checked="isChecked"
-              :value="value"
-              @change="updateInput"
-            />
-            <span class="checkmark"></span>
-          </label>
+          <Checkbox checkBoxType="checkmark" v-model="MySelectedValues" />
         </div>
         <div class="product-checkToCart-block">
-          <img class="favoriteIcon" src="../assets/favorite_icon.svg" alt="star icon">
+          <Checkbox checkBoxType="starmark" v-model="MySelectedValues" />
         </div>
       </div>
       {{ slide.id }}
@@ -25,18 +15,14 @@
 </template>
 
 <script>
+import Checkbox from './Checkbox.vue';
 export default {
   name: "ProductComponent",
-  components: {},
-  model: {
-    prop: "modelValue",
-    event: "change",
+  components: {
+    Checkbox,
   },
   data: () => ({
     sliderMode: true,
-    slickOptions: {
-      slidesToShow: 4,
-    },
     MySelectedValues: [],
   }),
   props: {
@@ -44,36 +30,10 @@ export default {
       type: Object,
       required: true,
     },
-    value: { type: String },
-    modelValue: { default: "" },
-    label: { type: String, required: true },
-    trueValue: { default: true },
-    falseValue: { default: false },
   },
-  mounted() {},
+  mounted() {
+  },
   methods: {
-    updateInput(event) {
-      let isChecked = event.target.checked;
-      if (this.modelValue instanceof Array) {
-        let newValue = [...this.modelValue];
-        if (isChecked) {
-          newValue.push(this.value);
-        } else {
-          newValue.splice(newValue.indexOf(this.value), 1);
-        }
-        this.$emit("change", newValue);
-      } else {
-        this.$emit("change", isChecked ? this.trueValue : this.falseValue);
-      }
-    },
-  },
-  computed: {
-    isChecked() {
-      if (this.modelValue instanceof Array) {
-        return this.modelValue.includes(this.value);
-      }
-      return this.modelValue === this.trueValue;
-    },
   },
 };
 </script>
@@ -105,46 +65,8 @@ export default {
   background-color: #fffa;
   border-radius: 50%;
 }
-.cart-box {
-  clip: rect(0 0 0 0);
-  clip-path: inset(50%);
-  height: 1px;
-  overflow: hidden;
-  position: absolute;
-  white-space: nowrap;
-  width: 1px;
-}
-/* }
-.label-for-box {
-  display: flex;
-  align-items: center;
-  user-select: none;
-  text-transform: capitalize;
-}
-.label-for-box::before {
-  box-sizing: border-box;
-  background-origin: border-box;
-  content: "";
-  display: inline-block;
-  width: 22px;
-  height: 22px;
-  flex-shrink: 0;
-  flex-grow: 0;
-  border: 1px solid #807873;
-  box-sizing: border-box;
-  border-radius: 2px;
-  background-repeat: no-repeat;
-  background-position: center center;
-}
-.product-checkToCart-block:hover {
-  cursor: pointer;
-}
-.product-checkToCart-block:hover .label-for-box::before {
-  background-image: url(../assets/checkbox.svg);
-  opacity: 0.5;
-} */
 
-.wrapper {
+/* .wrapper {
   display: flex;
   align-items: center;
   user-select: none;
@@ -174,15 +96,15 @@ export default {
   border-radius: 2px;
   background-repeat: no-repeat;
   background-position: center center;
-}
-.wrapper:hover input ~ .checkmark {
+} */
+/* .wrapper:hover input ~ .checkmark {
   background-image: url(../assets/checkbox.svg);
   opacity: 0.5;
 }
 .wrapper input:checked ~ .checkmark {
   background-image: url(../assets/checkbox.svg);
   opacity: 1;
-}
+} */
 .favoriteIcon{
   width: 25px;
   height: 25px;
