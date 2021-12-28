@@ -6,20 +6,36 @@
           <Checkbox checkBoxType="checkmark" v-model="MySelectedValues" />
         </div>
         <div class="product-checkToCart-block">
-          <Checkbox checkBoxType="starmark" v-model="MySelectedValues" />
+          <Starmark
+            checkBoxType="starmark"
+            v-model="MySelectedValues"
+            :isFavorite="slide.isFavorite"
+            @deleteFromFavorite="deleteCardFromFavorite"
+          />
         </div>
       </div>
-      {{ slide.id }}
+      <img
+        class="productImage"
+        :src="require(`../assets/${slide.img}`)"
+        alt="product image"
+      />
+    </div>
+    <div class="product-outer-block">
+      <h4 class="productName">{{ slide.name }}</h4>
+      <p class="productNumber">{{ slide.number }}</p>
+      <p class="productSizes">{{ slide.sizes }}</p>
     </div>
   </div>
 </template>
 
 <script>
-import Checkbox from './Checkbox.vue';
+import Checkbox from "./Checkbox.vue";
+import Starmark from "./Starmark.vue";
 export default {
   name: "ProductComponent",
   components: {
     Checkbox,
+    Starmark,
   },
   data: () => ({
     sliderMode: true,
@@ -31,30 +47,32 @@ export default {
       required: true,
     },
   },
-  mounted() {
-  },
+  mounted() {},
   methods: {
+    deleteCardFromFavorite() {
+      this.$emit("deleteCardFromFavorite", this.slide.id);
+    },
   },
 };
 </script>
 
 <style>
 .favorite-product-element {
-  height: 250px;
-  border: 1px solid #000;
-  background-color: aquamarine;
+  width: 230px;
+  height: 365px;
 }
 .product-inner-block {
-  height: 100%;
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 5px 10px;
 }
-.product-icons-block{
+.product-icons-block {
+  position: absolute;
   width: 100%;
   display: flex;
   justify-content: space-between;
+  z-index: 100;
 }
 .product-checkToCart-block {
   width: 40px;
@@ -62,52 +80,49 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #fffa;
+  margin: 5px 10px;
+  background-color: #fffb;
   border-radius: 50%;
 }
+.productImage {
+  width: 232px;
+  height: 256px;
+}
 
-/* .wrapper {
-  display: flex;
-  align-items: center;
-  user-select: none;
-  position: relative;
-  cursor: pointer;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-}
-.wrapper input {
-  position: absolute;
-  opacity: 0;
-  height: 0;
-  width: 0;
-}
-.checkmark {
-  box-sizing: border-box;
-  background-origin: border-box;
-  display: inline-block;
-  width: 22px;
-  height: 22px;
-  flex-shrink: 0;
-  flex-grow: 0;
-  border: 1px solid #807873;
-  box-sizing: border-box;
-  border-radius: 2px;
-  background-repeat: no-repeat;
-  background-position: center center;
-} */
-/* .wrapper:hover input ~ .checkmark {
-  background-image: url(../assets/checkbox.svg);
-  opacity: 0.5;
-}
-.wrapper input:checked ~ .checkmark {
-  background-image: url(../assets/checkbox.svg);
-  opacity: 1;
-} */
-.favoriteIcon{
+.favoriteIcon {
   width: 25px;
   height: 25px;
 }
-
+.productName {
+  margin: 25px 0 10px;
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 22px;
+  text-align: center;
+  text-transform: uppercase;
+  color: #1d1d1d;
+}
+.productNumber, .productSizes{
+  margin: 10px;
+}
+.productNumber {
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 20px;
+  text-align: center;
+  color: #1d1d1d;
+}
+.productSizes {
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 20px;
+  text-align: center;
+  color: #807873;
+}
 </style>

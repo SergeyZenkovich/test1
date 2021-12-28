@@ -1,6 +1,5 @@
 <template>
   <label class="wrapper flex items-center">
-    {{label}}
     <input class="checkbox" type="checkbox" :checked="isChecked" :value="value" @change="updateInput"/>
     <span :class="checkBoxType"></span>
   </label>
@@ -17,10 +16,6 @@ export default {
     "modelValue": { default: "" },
     "trueValue": { default: true },
     "falseValue": { default: false },
-    isFavorite: {
-      type: Boolean,
-      required: true,
-    },
     checkBoxType: String,
   },
   computed: {
@@ -84,7 +79,7 @@ export default {
 .starmark{
   width: 25px;
   height: 25px;
-  border: 1px solid #807873;
+  border: none;
   background-image: url(../assets/favorite_icon_unselected.svg);
 }
 .wrapper:hover input ~ .checkmark {
@@ -100,6 +95,5 @@ export default {
 }
 .wrapper input:checked ~ .starmark {
   background-image: url(../assets/favorite_icon.svg);
-  opacity: 1;
 }
 </style>
