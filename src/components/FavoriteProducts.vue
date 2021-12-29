@@ -76,7 +76,7 @@ export default {
     OrderSwitcher,
   },
   data: () => ({
-    sliderMode: false,
+    sliderMode: true,
     slickOptions: {
       slidesToShow: 5,
       slidesToScroll: 1,
@@ -270,7 +270,6 @@ export default {
 <style>
 @import "../../node_modules/slick-carousel/slick/slick.css";
 .subHeader {
-  width: 390px;
   margin: 0;
   font-family: "Cinzel";
   font-style: normal;
@@ -327,7 +326,7 @@ export default {
 .more-view-images-block {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
+  /* justify-content: space-between; */
 }
 .slick-slider {
   display: flex;

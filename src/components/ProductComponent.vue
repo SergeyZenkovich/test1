@@ -61,6 +61,10 @@ export default {
   width: 230px;
   height: 365px;
   margin-bottom: 30px;
+  margin-right: 30px;
+}
+.favorite-product-element:nth-child(5n){
+  margin-right: 0;
 }
 .product-inner-block {
   position: relative;

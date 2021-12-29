@@ -1,15 +1,18 @@
 <template>
   <div id="app">
-    <router-view/>
+    <FavoriteProducts />
+    <ProjectsBlock />
   </div>
 </template>
 
 <script>
-
+import FavoriteProducts from "./components/FavoriteProducts.vue";
+import ProjectsBlock from "./components/ProjetcsBlock.vue";
 export default {
   name: 'App',
   components: {
-    
+    FavoriteProducts,
+    ProjectsBlock,
   },
   methods:{
     cMethod: ()=> alert('Hello'),
