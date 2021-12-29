@@ -60,6 +60,7 @@ export default {
 .favorite-product-element {
   width: 230px;
   height: 365px;
+  margin-bottom: 30px;
 }
 .product-inner-block {
   position: relative;
